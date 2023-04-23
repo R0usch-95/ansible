@@ -1,0 +1,47 @@
+#ansible installation .
+#master
+sudo apt update
+sudo apt-install software-properties-common 
+sudo apt update
+sudo apt-get install ansible
+
+#slave
+sudo apt update
+sudo apt-get install python3
+
+#once above process done next step is configure SSH on master.
+#master
+sudo ssh-keygen
+sudo cd .ssh
+sudo cat id_rsa.pub
+#copy the content.
+
+#slave
+sudo cd .ssh
+sudo vi authorized_key
+#paste the content and save it.
+
+#Now from master try to do SSH.
+#master
+sudo ssh ubuntu@ip<ip-address-of-slave>
+
+#configuring host ip of slave into ansible host file.
+#master
+#go to /etc directory
+sudo cd /etc
+#check if ansible directory is created or not if not create one.
+sudo mkdir ansible
+#inside ansible directory create a file hosts.
+sudo nano hosts
+#now mentioned the below things.
+
+[groupname]
+<slave_name> ansible_ssh_hosts=<slave_ip_addr>
+#save it
+#Note:groupname you can set anything and slave_name also.
+
+#Now try to ping from master
+sudo ansible -m ping all 
+sudo ansible -m ping <groupname>
+sudo ansible -m ping <slave_name>
+

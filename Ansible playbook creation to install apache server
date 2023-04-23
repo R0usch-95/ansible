@@ -1,0 +1,14 @@
+#Ansible playbook creation to run apache server
+sudo mkdir ansible
+sudo nano apache.yaml
+
+---
+- name:Create a playbook to install apache server
+  hosts: slave1
+  become: true
+  tasks:
+  - name: Install apache2
+    apt: name=apache2 state=latest
+
+
+  

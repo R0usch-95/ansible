@@ -1,0 +1,21 @@
+#Ansible playbook creation to install docker
+sudo mkdir ansible
+sudo nano docker.yaml
+
+---
+- name:Create a playbook to install docker
+  hosts: all
+  become: true
+  tasks:
+  - name: Add docker GPG apt key
+    apt_key:
+	URL: https://download.docker.com/linux/ubuntu/gpg
+	state: present
+	
+  -name: Add docker apt repositories
+   apt-repository:
+   repo: https://download.docker.com/linux/ubuntu focal stable
+   state:present
+   
+  -name: Install docker
+   apt: name=docker-ce state=latest
